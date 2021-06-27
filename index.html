@@ -32,7 +32,7 @@
             <option value="mumbai">mumbai</option>
             <option value="delhi">delhi</option>
         </select>
-        <input type="text" style="" value="Type here" id='search' onKeyPress="filterData()" onchange="getSearchData()" size="40">
+        <input type="text" style="" value="Type here" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
         
         <table id="bankTable">
             <div id="table">
@@ -64,6 +64,8 @@
         var pageNo = 1;
         var totalCount = 0;
         var query = '';
+        var orginalData = [];
+        var displayData = [];
 
         function getData(query,limit,offset){
 
@@ -157,6 +159,26 @@
 
         function filterData(){
             console.log("fe");
+            //var data = [{name:"shaki",data:"31"},{name:"ats",data:"43"}]
+            var tempData = []
+            console.log("da",data)
+            var x = document.getElementById('search').value;
+            x = x.toUpperCase()
+            for(i=0;i<data.length;i++){
+                keys = Object.keys(data[i]);
+                for(j=0;j<keys.length;j++){
+                    //console.log(data[i],"de",keys,j,i,x)
+                    //console.log("as",data[i][keys[j]],x)
+                    if( keys[j] != "favourites"){
+                    if( data[i][keys[j]].includes(x)){
+                        tempData.push(data[i]);
+                        break;
+                    }}
+                }
+            }
+            setTable(tempData)
+            console.log(tempData)
+
         }
 
         $(document).ready(function() {
